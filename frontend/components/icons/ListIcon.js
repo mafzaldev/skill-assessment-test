@@ -6,7 +6,6 @@ const ListIcon = ({ ...props }) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="#867963"
-      className="w-6 h-6"
       {...props}
     >
       <path

@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`h-screen bg-[url('/image.webp')] bg-cover bg-top bg-no-repeat text-white antialiased ${inter.className}`}
+        className={`h-screen bg-[url('/image.webp')] bg-cover bg-top bg-no-repeat antialiased ${inter.className}`}
       >
         {children}
       </body>

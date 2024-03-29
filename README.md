@@ -2,7 +2,7 @@
 
 ## Instructions
 
-The app comprises of two parts: a front-end and a back-end. The front-end is a simple Next.js app that displays a list of users and their details. The back-end is a simple Express app that serves the front-end and provides an API to fetch the list of todos from MongoDB.
+The app comprises of two parts: a front-end and a back-end. The front-end is a simple Next.js app that displays a list of todos. The back-end is an Express app that serves the front-end and provides an API to fetch the list of todos from MongoDB.
 
 ### Backend
 
@@ -16,7 +16,9 @@ The app comprises of two parts: a front-end and a back-end. The front-end is a s
    PORT=<specify_port>
    ```
 
-5. Run the backend by running `npm start`
+5. Run `npx prisma generate`, which will generate the Prisma client
+6. Run `npx prisma db push`, which will push the schema to the database
+7. Run the backend by running `npm run dev`
 
 ### Frontend
 

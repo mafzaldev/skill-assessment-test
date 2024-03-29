@@ -1,5 +1,4 @@
 const { PrismaClient } = require("@prisma/client");
-
 const prisma = new PrismaClient();
 
 const getTodos = async (req, res) => {
@@ -7,7 +6,6 @@ const getTodos = async (req, res) => {
     const todos = await prisma.todo.findMany();
     res.status(200).json({ todos });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Something went wrong" });
   }
 };
@@ -27,8 +25,9 @@ const createTodo = async (req, res) => {
         createdAt,
       },
     });
-    res.json({ todo });
+    res.status(200).json({ todo });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Something went wrong" });
   }
 };
@@ -36,7 +35,7 @@ const createTodo = async (req, res) => {
 const updateTodo = async (req, res) => {
   const { id, title, isCompleted } = req.body;
 
-  if (!id || (!title && !isCompleted))
+  if (!id && (!title || !isCompleted))
     return res
       .status(400)
       .json({ message: "Id, title or isCompleted fields are missing!" });
@@ -51,9 +50,8 @@ const updateTodo = async (req, res) => {
         isCompleted,
       },
     });
-    res.json({ todo });
+    res.status(200).json({ todo });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Something went wrong" });
   }
 };
