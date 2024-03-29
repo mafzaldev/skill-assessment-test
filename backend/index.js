@@ -11,6 +11,11 @@ app.use(
     origin: "*",
   })
 );
+
+app.get("/", (req, res) => {
+  res.send("API is running... :confetti");
+});
+
 app.use("/api", require("./routes/todo-routes"));
 
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
