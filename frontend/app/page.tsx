@@ -28,43 +28,43 @@ export default function Home() {
   //   setTodoList((prev) => [...prev, result.todo]);
   // };
 
-  const updateTodoStatus = async (id: string, isCompleted: boolean) => {
-    const response = await fetch("http://localhost:5000/api/todo", {
-      method: "PATCH",
-      body: JSON.stringify({
-        id,
-        isCompleted: !isCompleted,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) return;
-    setTodoList(
-      todoList.map((todo) =>
-        todo.id === id ? { ...todo, isCompleted: !isCompleted } : todo,
-      ),
-    );
-  };
+  // const updateTodoStatus = async (id: string, isCompleted: boolean) => {
+  //   const response = await fetch("http://localhost:5000/api/todo", {
+  //     method: "PATCH",
+  //     body: JSON.stringify({
+  //       id,
+  //       isCompleted: !isCompleted,
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   if (!response.ok) return;
+  //   setTodoList(
+  //     todoList.map((todo) =>
+  //       todo.id === id ? { ...todo, isCompleted: !isCompleted } : todo,
+  //     ),
+  //   );
+  // };
 
-  const updateTodoTitle = async (id: string, title: string) => {
-    const response = await fetch("http://localhost:5000/api/todo", {
-      method: "PATCH",
-      body: JSON.stringify({
-        id,
-        title,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) return;
-    setTodoList(
-      todoList.map((todo) =>
-        todo.id === id ? { ...todo, title: title } : todo,
-      ),
-    );
-  };
+  // const updateTodoTitle = async (id: string, title: string) => {
+  //   const response = await fetch("http://localhost:5000/api/todo", {
+  //     method: "PATCH",
+  //     body: JSON.stringify({
+  //       id,
+  //       title,
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   if (!response.ok) return;
+  //   setTodoList(
+  //     todoList.map((todo) =>
+  //       todo.id === id ? { ...todo, title: title } : todo,
+  //     ),
+  //   );
+  // };
 
   // useEffect(() => {
   //   const fetchTodos = async () => {

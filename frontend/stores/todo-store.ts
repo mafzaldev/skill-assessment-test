@@ -28,7 +28,7 @@ export const createTodoStore = (
         ...initState,
         fetchTodos: async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/todos", {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/todos`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export const createTodoStore = (
         createTodo: async (title: string) => {
             const createdAt = new Date().toISOString();
             try {
-                const response = await fetch("http://localhost:5000/api/todo", {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/todo`, {
                     method: "POST",
                     body: JSON.stringify({
                         title,
@@ -64,7 +64,7 @@ export const createTodoStore = (
             }
         },
         updateTodoTitle: async (id: string, title: string) => {
-            const response = await fetch("http://localhost:5000/api/todo", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/todo`, {
                 method: "PATCH",
                 body: JSON.stringify({
                     id,
@@ -82,7 +82,7 @@ export const createTodoStore = (
             }));
         },
         updateTodoStatus: async (id: string, isCompleted: boolean) => {
-            const response = await fetch("http://localhost:5000/api/todo", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/todo`, {
                 method: "PATCH",
                 body: JSON.stringify({
                     id,
