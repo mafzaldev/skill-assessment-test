@@ -1,4 +1,5 @@
 "use client";
+
 import CheckCircleIcon from "@/components/icons/CheckCircleIcon";
 import DotIcon from "@/components/icons/DotIcon";
 import { cn, formatDate } from "@/lib/utils";
@@ -26,7 +27,14 @@ function TodoItem({ todo }: { todo: Todo }) {
                 todo.isCompleted ? "fill-green-500" : "fill-gray-600",
               )}
             />
-            <span className="ml-1 font-medium text-gray-600">{todo.title}</span>
+            <span
+              className={cn(
+                `ml-1 font-medium text-gray-600`,
+                todo.isCompleted ? "line-through" : "",
+              )}
+            >
+              {todo.title}
+            </span>
           </div>
           <DotIcon
             className="h-5 w-5 cursor-pointer"
@@ -34,12 +42,9 @@ function TodoItem({ todo }: { todo: Todo }) {
           />
         </div>
         <div
-          className={cn(
-            "my-1 h-0 overflow-hidden transition-[height] duration-300 ease-in-out",
-            {
-              "h-[100px]": open,
-            },
-          )}
+          className={cn("my-1 h-0 overflow-hidden duration-300 ease-in-out", {
+            "h-[100px]": open,
+          })}
         >
           <p className="py-2 text-sm font-medium">
             Is Completed:{" "}
@@ -55,11 +60,8 @@ function TodoItem({ todo }: { todo: Todo }) {
             <EditButton id={todo.id} title={todo.title} />
             <DeleteButton id={todo.id} />
           </div>
-          {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. [...] */}
         </div>
       </div>
-
-      {/* <EditButton id={todo.id} title={todo.title} /> */}
     </div>
   );
 }

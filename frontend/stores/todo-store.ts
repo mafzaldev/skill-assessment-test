@@ -1,6 +1,5 @@
 import { createStore } from 'zustand/vanilla';
 
-
 export type TodoState = {
     isLoading: boolean
     todos: Todo[]
@@ -20,7 +19,6 @@ export const defaultInitState: TodoState = {
 }
 
 export const initTodoStore = (): TodoState => {
-
     return {
         isLoading: false,
         todos: [],
@@ -72,6 +70,7 @@ export const createTodoStore = (
                 console.error(error);
             }
         },
+
         updateTodoTitle: async (id: string, title: string) => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/todo`, {
                 method: "PATCH",
@@ -90,6 +89,7 @@ export const createTodoStore = (
                 ),
             }));
         },
+
         updateTodoStatus: async (id: string, isCompleted: boolean) => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/todo`, {
                 method: "PATCH",
@@ -102,14 +102,13 @@ export const createTodoStore = (
                 },
             });
             if (!response.ok) return;
-
             set((state) => ({
                 todos: state.todos.map((todo) =>
                     todo.id === id ? { ...todo, isCompleted: !isCompleted } : todo,
                 ),
             }));
-
         },
+
         deleteTodo: async (id: string) => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/todo/${id}`, {
                 method: "DELETE",

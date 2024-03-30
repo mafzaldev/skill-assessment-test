@@ -17,5 +17,4 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", require("./routes/todo-routes"));
-
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));

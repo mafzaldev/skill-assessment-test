@@ -26,7 +26,7 @@ export function EditButton({ id, title }: { id: string; title: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="w-[48%] rounded-md bg-green-100 px-2 py-1 text-sm text-green-600">
+        <button className="w-[48%] rounded-md bg-green-200 px-2 py-1 text-sm text-green-600">
           Update Todo
         </button>
       </DialogTrigger>
@@ -37,13 +37,13 @@ export function EditButton({ id, title }: { id: string; title: string }) {
         <form className="my-6 flex flex-col  items-center gap-2 rounded-md stroke-none px-2 py-1">
           <input
             type="text"
-            className="rounded-md p-2 tracking-tighter"
+            className="w-full rounded-md border-2 border-black p-2 tracking-tighter"
             placeholder="Add new task"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
           />
           <button
-            className="rounded-md bg-red-200 px-8 py-2 text-sm text-red-500"
+            className="rounded-md bg-green-200 px-8 py-2 text-sm text-green-600"
             onClick={handleSubmit}
           >
             Update
