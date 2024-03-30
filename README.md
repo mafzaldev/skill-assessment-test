@@ -1,5 +1,15 @@
 # Skill Assessment Test
 
+## Tech Stack
+
+- Next.js
+- TypeScript
+- Tailwind CSS + shadcn/ui
+- Zustand (for state management)
+- Express
+- MongoDB
+- Prisma
+
 ## Instructions
 
 The app comprises of two parts: a front-end and a back-end. The front-end is a simple Next.js app that displays a list of todos. The back-end is an Express app that serves the front-end and provides an API to fetch the list of todos from MongoDB.
@@ -27,7 +37,7 @@ The app comprises of two parts: a front-end and a back-end. The front-end is a s
 3. Create a `.env` file in the `frontend` directory and add the following environment variables:
 
    ```
-   NEXT_BACKEND_URL=http://localhost:{specified_port}
+   NEXT_PUBLIC_BACKEND_URL=http://localhost:{specified_port}
    ```
 
 4. Run the app by running `npm run dev`
