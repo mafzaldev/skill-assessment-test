@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`h-screen bg-[url('/image.webp')] bg-cover bg-top bg-no-repeat antialiased ${inter.className}`}
+        className={`bg-[url('/image.webp')] bg-cover bg-fixed bg-center bg-no-repeat antialiased ${inter.className}`}
       >
         <TodoStoreProvider>{children}</TodoStoreProvider>
       </body>

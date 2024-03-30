@@ -4,7 +4,8 @@ import DotIcon from "@/components/icons/DotIcon";
 import { cn, formatDate } from "@/lib/utils";
 import { useTodoStore } from "@/providers/todo-state-provider";
 import { useState } from "react";
-import { EditButton } from "./edit-form";
+import { DeleteButton } from "./delete-button";
+import { EditButton } from "./edit-button";
 
 function TodoItem({ todo }: { todo: Todo }) {
   const [open, setOpen] = useState(false);
@@ -50,9 +51,9 @@ function TodoItem({ todo }: { todo: Todo }) {
             Created At:{" "}
             <span className="font-normal">{formatDate(todo.createdAt)}</span>
           </p>
-          <div>
+          <div className="my-2 w-full space-x-1">
             <EditButton id={todo.id} title={todo.title} />
-            <EditButton id={todo.id} title={todo.title} />
+            <DeleteButton id={todo.id} />
           </div>
           {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. [...] */}
         </div>

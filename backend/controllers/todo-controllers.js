@@ -3,7 +3,11 @@ const prisma = new PrismaClient();
 
 const getTodos = async (req, res) => {
   try {
-    const todos = await prisma.todo.findMany();
+    const todos = await prisma.todo.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
     res.status(200).json({ todos });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
