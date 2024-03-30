@@ -4,11 +4,13 @@ import ListIcon from "@/components/icons/ListIcon";
 import CreateForm from "@/components/ui/create-form";
 import TodoItem from "@/components/ui/todo-item";
 import { useTodoStore } from "@/providers/todo-state-provider";
+import { LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+
 export default function Home() {
   const [todoList, setTodoList] = useState<Todo[]>([]);
-  const { todos, fetchTodos } = useTodoStore((state) => state);
+  const { todos, isLoading, fetchTodos } = useTodoStore((state) => state);
 
   // const onSubmit = async (title: string) => {
   //   const createdAt = new Date().toISOString();
@@ -97,6 +99,7 @@ export default function Home() {
           alt="Profile Picture"
           width={200}
           height={200}
+          priority
         />
       </div>
       <CreateForm />
@@ -109,7 +112,11 @@ export default function Home() {
       </div>
       {todos?.length === 0 ? (
         <div className="mt-2 flex h-[150px] w-[285px] items-center justify-center rounded-md bg-white/50 p-2 shadow-md backdrop-blur-sm">
-          No Task Today
+          {!isLoading ? (
+            <p>No Task Today</p>
+          ) : (
+            <LoaderCircle className="h-10 w-10 animate-spin" />
+          )}
         </div>
       ) : (
         <div className="mt-2 flex flex-col p-2">

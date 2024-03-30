@@ -2,6 +2,7 @@ import { createStore } from 'zustand/vanilla';
 
 
 export type TodoState = {
+    isLoading: boolean
     todos: Todo[]
 }
 
@@ -14,11 +15,16 @@ export type TodoActions = {
 }
 
 export const defaultInitState: TodoState = {
+    isLoading: false,
     todos: [],
 }
 
 export const initTodoStore = (): TodoState => {
-    return { todos: [] }
+
+    return {
+        isLoading: false,
+        todos: [],
+    }
 }
 
 export const createTodoStore = (
@@ -27,6 +33,7 @@ export const createTodoStore = (
     return createStore<TodoStore>()((set) => ({
         ...initState,
         fetchTodos: async () => {
+            set({ isLoading: true });
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/todos`, {
                     method: "GET",
@@ -41,6 +48,8 @@ export const createTodoStore = (
                 });
             } catch (error) {
                 console.error(error);
+            } finally {
+                set({ isLoading: false });
             }
         },
 
@@ -58,7 +67,7 @@ export const createTodoStore = (
                     },
                 });
                 const result = await response.json();
-                set((state) => ({ todos: [...state.todos, result.todo] }));
+                set((state) => ({ todos: [result.todo, ...state.todos] }));
             } catch (error) {
                 console.error(error);
             }
@@ -101,7 +110,18 @@ export const createTodoStore = (
             }));
 
         },
-        deleteTodo: async (id: string) => { }
+        deleteTodo: async (id: string) => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/todo/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (!response.ok) return;
+            set((state) => ({
+                todos: state.todos.filter((todo) => todo.id !== id),
+            }));
+        }
     }))
 }
 
