@@ -1,3 +1,4 @@
+import { TodoStoreProvider } from "@/providers/todo-state-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -18,7 +19,7 @@ export default function RootLayout({
       <body
         className={`h-screen bg-[url('/image.webp')] bg-cover bg-top bg-no-repeat antialiased ${inter.className}`}
       >
-        {children}
+        <TodoStoreProvider>{children}</TodoStoreProvider>
       </body>
     </html>
   );

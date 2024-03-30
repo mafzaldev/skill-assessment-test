@@ -1,24 +1,24 @@
 "use client";
 
 import PlusIcon from "@/components/icons/PlusIcon";
+import { useTodoStore } from "@/providers/todo-state-provider";
 import { FormEvent, useState } from "react";
 
-export default function CreateForm({
-  onSubmit,
-}: {
-  onSubmit: (title: string) => void;
-}) {
+export default function CreateForm() {
   const [task, setTask] = useState("");
+  const { createTodo } = useTodoStore((state) => state);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    onSubmit(task);
+    if (!task) return;
+    createTodo(task);
     setTask("");
   };
 
   return (
     <form className="my-6 flex items-center gap-1 rounded-md bg-white stroke-none px-2 py-1">
       <input
+        type="text"
         className="p-2 tracking-tighter"
         placeholder="Add new task"
         value={task}

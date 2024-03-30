@@ -1,35 +1,34 @@
 "use client";
-import CheckCircleIcon from "@/components/icons/CheckCircleIcon";
 import ChevronIcon from "@/components/icons/ChevronIcon";
-import DotIcon from "@/components/icons/DotIcon";
 import ListIcon from "@/components/icons/ListIcon";
 import CreateForm from "@/components/ui/create-form";
-import { cn } from "@/lib/utils";
+import TodoItem from "@/components/ui/todo-item";
+import { useTodoStore } from "@/providers/todo-state-provider";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
 export default function Home() {
   const [todoList, setTodoList] = useState<Todo[]>([]);
+  const { todos, fetchTodos } = useTodoStore((state) => state);
 
-  const onSubmit = async (title: string) => {
-    const createdAt = new Date().toISOString();
+  // const onSubmit = async (title: string) => {
+  //   const createdAt = new Date().toISOString();
 
-    const response = await fetch("http://localhost:5000/api/todo", {
-      method: "POST",
-      body: JSON.stringify({
-        title,
-        createdAt,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  //   const response = await fetch("http://localhost:5000/api/todo", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       title,
+  //       createdAt,
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
 
-    const result = await response.json();
-    setTodoList((prev) => [...prev, result.todo]);
-  };
+  //   const result = await response.json();
+  //   setTodoList((prev) => [...prev, result.todo]);
+  // };
 
-  const updateTodo = async (id: string, isCompleted: boolean) => {
+  const updateTodoStatus = async (id: string, isCompleted: boolean) => {
     const response = await fetch("http://localhost:5000/api/todo", {
       method: "PATCH",
       body: JSON.stringify({
@@ -48,22 +47,45 @@ export default function Home() {
     );
   };
 
+  const updateTodoTitle = async (id: string, title: string) => {
+    const response = await fetch("http://localhost:5000/api/todo", {
+      method: "PATCH",
+      body: JSON.stringify({
+        id,
+        title,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) return;
+    setTodoList(
+      todoList.map((todo) =>
+        todo.id === id ? { ...todo, title: title } : todo,
+      ),
+    );
+  };
+
+  // useEffect(() => {
+  //   const fetchTodos = async () => {
+  //     try {
+  //       const response = await fetch("http://localhost:5000/api/todos", {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  //       const result = await response.json();
+  //       console.log(result.todos);
+  //       setTodoList(result.todos);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchTodos();
+  // }, []);
+
   useEffect(() => {
-    const fetchTodos = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/todos", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const result = await response.json();
-        console.log(result.todos);
-        setTodoList(result.todos);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     fetchTodos();
   }, []);
 
@@ -77,7 +99,7 @@ export default function Home() {
           height={200}
         />
       </div>
-      <CreateForm onSubmit={onSubmit} />
+      <CreateForm />
       <div className="flex w-[285px] items-center justify-between rounded-md border-2 border-white bg-white/20 p-2 shadow-md backdrop-blur-sm">
         <div className="flex items-center">
           <ListIcon className="h-5 w-5" />
@@ -85,32 +107,35 @@ export default function Home() {
         </div>
         <ChevronIcon className="h-5 w-5" />
       </div>
-      {todoList?.length === 0 ? (
+      {todos?.length === 0 ? (
         <div className="mt-2 flex h-[150px] w-[285px] items-center justify-center rounded-md bg-white/50 p-2 shadow-md backdrop-blur-sm">
           No Task Today
         </div>
       ) : (
         <div className="mt-2 flex flex-col p-2">
-          {todoList?.map((todo) => (
-            <div
-              key={todo.id}
-              className="border-b-1 flex w-[285px] items-center justify-between border-gray-400 bg-[#DDD5CC]/80 px-2 py-3 shadow-md first:rounded-t-md first:border-t-0 last:rounded-b-md last:border-b-0"
-            >
-              <div className="flex items-center">
-                <CheckCircleIcon
-                  onClick={() => updateTodo(todo.id, todo.isCompleted)}
-                  className={cn(
-                    `h-5 w-5 cursor-pointer`,
-                    todo.isCompleted ? "fill-green-500" : "fill-gray-600",
-                  )}
-                />
-                <span className="ml-1 font-medium text-gray-600">
-                  {todo.title}
-                </span>
-              </div>
-              <DotIcon className="h-5 w-5 cursor-pointer" />
-            </div>
+          {todos?.map((todo) => (
+            <TodoItem key={todo.id} todo={todo} />
+            // <div
+            //   key={todo.id}
+            //   className="border-b-1 flex w-[285px] items-center justify-between border-gray-400 bg-[#DDD5CC]/80 px-2 py-3 shadow-md first:rounded-t-md first:border-t-0 last:rounded-b-md last:border-b-0"
+            // >
+            //   <div className="flex items-center">
+            //     <CheckCircleIcon
+            //       onClick={() => updateTodo(todo.id, todo.isCompleted)}
+            //       className={cn(
+            //         `h-5 w-5 cursor-pointer`,
+            //         todo.isCompleted ? "fill-green-500" : "fill-gray-600",
+            //       )}
+            //     />
+            //     <span className="ml-1 font-medium text-gray-600">
+            //       {todo.title}
+            //     </span>
+            //   </div>
+            //   <DotIcon className="h-5 w-5 cursor-pointer" />
+            // </div>
           ))}
+          {/* <TodoItem /> */}
+          {/* <EditButton id={todo.id} title={todo.title} /> */}
         </div>
       )}
     </main>
